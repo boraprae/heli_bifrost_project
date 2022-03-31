@@ -54,14 +54,26 @@ class ChatInputField extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Icon(
-                      Icons.camera_alt_outlined,
-                      color: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
-                          .color!
-                          .withOpacity(0.64),
+                    //?=== Send Message Button ===?
+                    IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.send,
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodyText1!
+                            .color!
+                            .withOpacity(0.64),
+                      ),
                     ),
+                    // Icon(
+                    //   Icons.camera_alt_outlined,
+                    //   color: Theme.of(context)
+                    //       .textTheme
+                    //       .bodyText1!
+                    //       .color!
+                    //       .withOpacity(0.64),
+                    // ),
                   ],
                 ),
               ),
