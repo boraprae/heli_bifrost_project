@@ -2,9 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:heli_bifrost_project/constants.dart';
 
 class ChatInputField extends StatelessWidget {
-  const ChatInputField({
-    Key? key,
-  }) : super(key: key);
+  Function(String text)? onSendButtonPressed;
+  ChatInputField({Key? key, Function(String text)? onSendButtonPressed})
+      : super(key: key) {
+    this.onSendButtonPressed = onSendButtonPressed;
+  }
+
+  TextEditingController messageTextFieldController = TextEditingController();
+
+  void _onSendButtonPressed() {
+    print('Send message btn');
+    if (onSendButtonPressed != null) {
+      onSendButtonPressed!(messageTextFieldController.text);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +62,11 @@ class ChatInputField extends StatelessWidget {
                             .withOpacity(0.64),
                       ),
                     ),
-                    SizedBox(width: kDefaultPadding / 4),
+                    const SizedBox(width: kDefaultPadding / 4),
                     Expanded(
                       child: TextField(
-                        decoration: InputDecoration(
+                        controller: messageTextFieldController,
+                        decoration: const InputDecoration(
                           hintText: "Type message",
                           border: InputBorder.none,
                         ),
@@ -62,9 +74,7 @@ class ChatInputField extends StatelessWidget {
                     ),
                     //?=== Send Message Button ===?
                     IconButton(
-                      onPressed: () {
-                         print('Send message btn');
-                      },
+                      onPressed: _onSendButtonPressed,
                       icon: Icon(
                         Icons.send,
                         color: Theme.of(context)
