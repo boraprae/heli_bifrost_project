@@ -20,7 +20,7 @@ class _ChatScreenState extends State<ChatScreen> {
         automaticallyImplyLeading: false,
         title: Row(
           children: [
-            BackButton(),
+            const BackButton(),
             CircleAvatar(
               backgroundImage: AssetImage("assets/images/heli_profile.jpg"),
             ),

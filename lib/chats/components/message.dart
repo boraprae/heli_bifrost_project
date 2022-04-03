@@ -21,11 +21,11 @@ class Message extends StatelessWidget {
             message.isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           if (!message.isSender) ...[
-            CircleAvatar(
+            const CircleAvatar(
               radius: 12,
               backgroundImage: AssetImage("assets/images/heli_profile.jpg"),
             ),
-            SizedBox(
+            const SizedBox(
               width: kDefaultPadding / 2,
             ),
           ],
@@ -49,7 +49,7 @@ class TextMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: kDefaultPadding * 0.75,
         vertical: kDefaultPadding / 2,
       ),
