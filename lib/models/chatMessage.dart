@@ -17,13 +17,13 @@ class ChatMessage {
 
 List demeChatMessages = [
   // ChatMessage(
-  //   text: "Hi Sajol,",
+  //   text: "Hi Sajol, tesssssssssssssssssssssssssstdfsdfsdfsdfsdfsdfsfsdfsdf",
   //   messageType: ChatMessageType.text,
   //   messageStatus: MessageStatus.viewed,
   //   isSender: false,
   // ),
   // ChatMessage(
-  //   text: "Hello, How are you?",
+  //   text: "Hello, How are you?rdsfggggggfdgdfgdfgsdfgsrlgkhjvfhjvjhvjhvhjvjhvhjvsolgks",
   //   messageType: ChatMessageType.text,
   //   messageStatus: MessageStatus.viewed,
   //   isSender: true,

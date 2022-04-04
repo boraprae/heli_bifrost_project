@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:heli_bifrost_project/chats/components/text_message.dart';
 import 'package:heli_bifrost_project/constants.dart';
@@ -29,8 +30,10 @@ class Message extends StatelessWidget {
               width: kDefaultPadding / 2,
             ),
           ],
-          TextMessage(
-            message: message,
+          Flexible(
+            child: TextMessage(
+              message: message,
+            ),
           ),
         ],
       ),
@@ -57,7 +60,8 @@ class TextMessage extends StatelessWidget {
         color: purpleG.withOpacity(message.isSender ? 1 : 0.1),
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Text(
+      child: AutoSizeText(
+        
         message.text,
         style: TextStyle(
           color: message.isSender
