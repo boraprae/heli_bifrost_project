@@ -53,11 +53,11 @@ class TextMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-        horizontal: kDefaultPadding * 0.75,
+        horizontal: kDefaultPadding * 0.80,
         vertical: kDefaultPadding / 2,
       ),
       decoration: BoxDecoration(
-        color: purpleG.withOpacity(message.isSender ? 1 : 0.1),
+        color:  message.isSender ? lightLilac : lightBlueSky,
         borderRadius: BorderRadius.circular(30),
       ),
       child: AutoSizeText(
@@ -65,7 +65,7 @@ class TextMessage extends StatelessWidget {
         message.text,
         style: TextStyle(
           color: message.isSender
-              ? Colors.white
+              ? Colors.black
               : Theme.of(context).textTheme.bodyText1?.color,
         ),
       ),

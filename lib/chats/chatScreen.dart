@@ -15,7 +15,6 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   var selectedItem = '';
-
   void _sendMessage(String textMessage) async {
     Response response = await GetConnect(timeout: const Duration(seconds: 15))
         .post(dotenv.env['SERVER_ADDRESS']! + '/query', {"query": textMessage});
@@ -40,85 +39,219 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Row(
-          children: [
-            const BackButton(),
-            CircleAvatar(
-              backgroundImage: AssetImage("assets/images/heli_profile.jpg"),
+    Size size = MediaQuery.of(context).size;
+    return SafeArea(
+      child: Scaffold(
+        // appBar: AppBar(
+        //   automaticallyImplyLeading: false,
+        //   toolbarHeight: size.height * 0.11,
+        //   title: Row(
+        //     crossAxisAlignment: CrossAxisAlignment.center,
+        //     children: [
+        //       const BackButton(),
+        //       CircleAvatar(
+        //         minRadius: 30,
+        //         maxRadius: 35,
+        //         backgroundImage: AssetImage("assets/images/heli_profile.jpg"),
+        //       ),
+        //       SizedBox(width: kDefaultPadding * 0.75),
+        //       Column(
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         children: [
+        //           Text(
+        //             "สถานะวันนี้ของเฮลิ",
+        //             style: TextStyle(
+        //               fontSize: 10,
+        //               fontWeight: FontWeight.bold,
+        //               color: Colors.black,
+        //             ),
+        //           ),
+        //           SizedBox(
+        //             height: 5,
+        //           ),
+        //           Text(
+        //             "\"โชคดีที่มีเฮลิ\"",
+        //             style: TextStyle(
+        //               fontSize: 12,
+        //               color: Colors.black,
+        //             ),
+        //           )
+        //         ],
+        //       )
+        //     ],
+        //   ),
+        //   flexibleSpace: Container(
+        //     decoration: BoxDecoration(
+        //       gradient: LinearGradient(
+        //         begin: Alignment.centerLeft,
+        //         end: Alignment.centerRight,
+        //         colors: <Color>[lightLilac, lightBlueSky],
+        //         stops: [0.1, 2.5],
+        //       ),
+        //     ),
+        //   ),
+        //   actions: [
+        //     //!--- Assume the menu ---!
+        //     PopupMenuButton(
+        //       onSelected: (value) {
+        //         setState(() {
+        //           selectedItem = value.toString();
+        //         });
+        //         //print(value);
+        //         Navigator.pushNamed(context, value.toString());
+        //       },
+        //       itemBuilder: (BuildContext bc) {
+        //         return const [
+        //           PopupMenuItem(
+        //             child: Text("Hello"),
+        //             value: '/hello',
+        //           ),
+        //           PopupMenuItem(
+        //             child: Text("About"),
+        //             value: '/about',
+        //           ),
+        //           PopupMenuItem(
+        //             child: Text("Contact"),
+        //             value: '/contact',
+        //           )
+        //         ];
+        //       },
+        //     ),
+        //     SizedBox(width: kDefaultPadding / 2),
+        //   ],
+        // ),
+        body: Container(
+          width: size.width,
+          height: size.height,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: <Color>[lightLilac, lightBlueSky],
+              stops: [0.1, 2.5],
             ),
-            SizedBox(width: kDefaultPadding * 0.75),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "สถานะวันนี้ของเฮลิ",
-                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+          ),
+          child: Stack(
+            children: [
+              Positioned(
+                top: 20,
+                child: Row(
+                  children: [
+                    const BackButton(),
+                    CircleAvatar(
+                      minRadius: 30,
+                      maxRadius: 35,
+                      backgroundImage:
+                          AssetImage("assets/images/heli_profile.jpg"),
+                    ),
+                    SizedBox(width: kDefaultPadding * 0.75),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "สถานะวันนี้ของเฮลิ",
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "\"โชคดีที่มีเฮลิ\"",
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.black,
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(width: size.width * 0.35),
+                    PopupMenuButton(
+                      onSelected: (value) {
+                        setState(() {
+                          selectedItem = value.toString();
+                        });
+                        //print(value);
+                        Navigator.pushNamed(context, value.toString());
+                      },
+                      itemBuilder: (BuildContext bc) {
+                        return const [
+                          PopupMenuItem(
+                            child: Text("Hello"),
+                            value: '/hello',
+                          ),
+                          PopupMenuItem(
+                            child: Text("About"),
+                            value: '/about',
+                          ),
+                          PopupMenuItem(
+                            child: Text("Contact"),
+                            value: '/contact',
+                          )
+                        ];
+                      },
+                    ),
+                  ],
                 ),
-                Text(
-                  "โชคดีที่มีเฮลิ",
-                  style: TextStyle(fontSize: 12),
-                )
-              ],
-            )
-          ],
+              ),
+              Positioned(
+                top: 110,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    width: size.width,
+                    height: size.height,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(50.0),
+                        topRight: Radius.circular(50.0),
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        //Chat area
+                        Container(
+                          width: size.width,
+                          height: size.height * 0.5,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: kDefaultPadding),
+                            child: ListView.builder(
+                              itemCount: demeChatMessages.length,
+                              itemBuilder: (context, index) =>
+                                  Message(message: demeChatMessages[index]),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: ChatInputField(
+                  onSendButtonPressed: (text) {
+                    setState(() {
+                      demeChatMessages.add(ChatMessage(
+                          text: text,
+                          messageType: ChatMessageType.text,
+                          messageStatus: MessageStatus.viewed,
+                          isSender: true));
+                    });
+                    if (text.trim().isNotEmpty) {
+                      _sendMessage(text);
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
-        actions: [
-          //!--- Assume the menu ---!
-          PopupMenuButton(onSelected: (value) {
-            setState(() {
-              selectedItem = value.toString();
-            });
-            //print(value);
-            Navigator.pushNamed(context, value.toString());
-          }, itemBuilder: (BuildContext bc) {
-            return const [
-              PopupMenuItem(
-                child: Text("Hello"),
-                value: '/hello',
-              ),
-              PopupMenuItem(
-                child: Text("About"),
-                value: '/about',
-              ),
-              PopupMenuItem(
-                child: Text("Contact"),
-                value: '/contact',
-              )
-            ];
-          }),
-          SizedBox(width: kDefaultPadding / 2),
-        ],
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-              child: ListView.builder(
-                itemCount: demeChatMessages.length,
-                itemBuilder: (context, index) =>
-                    Message(message: demeChatMessages[index]),
-              ),
-            ),
-          ),
-          ChatInputField(
-            onSendButtonPressed: (text) {
-              setState(() {
-                demeChatMessages.add(ChatMessage(
-                    text: text,
-                    messageType: ChatMessageType.text,
-                    messageStatus: MessageStatus.viewed,
-                    isSender: true));
-              });
-              if (text.trim().isNotEmpty) {
-                _sendMessage(text);
-              }
-            },
-          ),
-        ],
       ),
     );
   }

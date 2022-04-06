@@ -25,12 +25,12 @@ class ChatInputField extends StatelessWidget {
         vertical: kDefaultPadding / 2,
       ),
       decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        color: lightPurple,
         boxShadow: [
           BoxShadow(
             offset: Offset(0, 4),
             blurRadius: 32,
-            color: Color(0xFF087949).withOpacity(0.08),
+            color: lightLilac.withOpacity(0.08),
           ),
         ],
       ),
@@ -43,7 +43,7 @@ class ChatInputField extends StatelessWidget {
                   horizontal: kDefaultPadding * 0.75,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.purple.withOpacity(0.05),
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(40),
                 ),
                 child: Row(
@@ -55,11 +55,7 @@ class ChatInputField extends StatelessWidget {
                       },
                       icon: Icon(
                         Icons.sentiment_satisfied_alt_outlined,
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodyText1!
-                            .color!
-                            .withOpacity(0.64),
+                        color: darkGreen,
                       ),
                     ),
                     const SizedBox(width: kDefaultPadding / 4),
@@ -67,7 +63,8 @@ class ChatInputField extends StatelessWidget {
                       child: TextField(
                         controller: messageTextFieldController,
                         decoration: const InputDecoration(
-                          hintText: "Type message",
+                          hintText: "พิมพ์ข้อความที่นี่...",
+                          hintStyle: TextStyle(fontSize: 12),
                           border: InputBorder.none,
                         ),
                       ),
@@ -77,11 +74,7 @@ class ChatInputField extends StatelessWidget {
                       onPressed: _onSendButtonPressed,
                       icon: Icon(
                         Icons.send,
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodyText1!
-                            .color!
-                            .withOpacity(0.64),
+                        color: darkGreen,
                       ),
                     ),
                     // Icon(

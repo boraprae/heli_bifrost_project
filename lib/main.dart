@@ -10,6 +10,7 @@ void main() async {
     GetMaterialApp(
       theme: ThemeData(
         fontFamily: 'Mali',
+        primaryColor: Colors.black,
         // bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.black54),
       ),
       debugShowCheckedModeBanner: false,
