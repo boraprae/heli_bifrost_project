@@ -23,7 +23,7 @@ class Message extends StatelessWidget {
         children: [
           if (!message.isSender) ...[
             const CircleAvatar(
-              radius: 12,
+              radius: 15,
               backgroundImage: AssetImage("assets/images/heli_profile.jpg"),
             ),
             const SizedBox(
