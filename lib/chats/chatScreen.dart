@@ -129,8 +129,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(50.0),
-                        topRight: Radius.circular(50.0),
+                        topLeft: Radius.circular(35.0),
+                        topRight: Radius.circular(35.0),
                       ),
                     ),
                     child: Column(
