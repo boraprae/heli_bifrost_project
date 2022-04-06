@@ -8,6 +8,10 @@ void main() async {
 
   runApp(
     GetMaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Mali',
+        // bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.black54),
+      ),
       debugShowCheckedModeBanner: false,
       initialRoute: '/chat',
       routes: {
