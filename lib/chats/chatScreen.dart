@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 import 'package:heli_bifrost_project/chats/components/chat_input_field.dart';
 import 'package:heli_bifrost_project/chats/components/message.dart';
 import 'package:heli_bifrost_project/constants.dart';
@@ -13,6 +15,29 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   var selectedItem = '';
+
+  void _sendMessage(String textMessage) async {
+    Response response = await GetConnect(timeout: const Duration(seconds: 15))
+        .post(dotenv.env['SERVER_ADDRESS']! + '/query', {"query": textMessage});
+
+    if (response.isOk) {
+      // print(response.body);
+      setState(() {
+        demeChatMessages.add(ChatMessage(
+            text: response.body['queryResult']['fulfillmentText'],
+            messageType: ChatMessageType.text,
+            messageStatus: MessageStatus.viewed,
+            isSender: false));
+      });
+    } else {
+      Get.defaultDialog(
+          title: 'Error',
+          middleText: response.statusCode == null
+              ? "Request timed out"
+              : "Cannot send message, please try again");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +45,7 @@ class _ChatScreenState extends State<ChatScreen> {
         automaticallyImplyLeading: false,
         title: Row(
           children: [
-            BackButton(),
+            const BackButton(),
             CircleAvatar(
               backgroundImage: AssetImage("assets/images/heli_profile.jpg"),
             ),
@@ -79,7 +104,20 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ),
-          ChatInputField(),
+          ChatInputField(
+            onSendButtonPressed: (text) {
+              setState(() {
+                demeChatMessages.add(ChatMessage(
+                    text: text,
+                    messageType: ChatMessageType.text,
+                    messageStatus: MessageStatus.viewed,
+                    isSender: true));
+              });
+              if (text.trim().isNotEmpty) {
+                _sendMessage(text);
+              }
+            },
+          ),
         ],
       ),
     );
