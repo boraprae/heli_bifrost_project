@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -16,8 +17,10 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   var selectedItem = '';
   void _sendMessage(String textMessage) async {
+    print('Sending query.. $textMessage');
+    String serverAddress = kIsWeb ? 'http://localhost:3001' : dotenv.env['SERVER_ADDRESS']!;
     Response response = await GetConnect(timeout: const Duration(seconds: 15))
-        .post(dotenv.env['SERVER_ADDRESS']! + '/query', {"query": textMessage});
+        .post( serverAddress + '/query', {"query": textMessage});
 
     if (response.isOk) {
       // print(response.body);
@@ -160,14 +163,14 @@ class _ChatScreenState extends State<ChatScreen> {
                 alignment: Alignment.bottomCenter,
                 child: ChatInputField(
                   onSendButtonPressed: (text) {
-                    setState(() {
-                      demeChatMessages.add(ChatMessage(
-                          text: text,
-                          messageType: ChatMessageType.text,
-                          messageStatus: MessageStatus.viewed,
-                          isSender: true));
-                    });
                     if (text.trim().isNotEmpty) {
+                      setState(() {
+                        demeChatMessages.add(ChatMessage(
+                            text: text,
+                            messageType: ChatMessageType.text,
+                            messageStatus: MessageStatus.viewed,
+                            isSender: true));
+                      });
                       _sendMessage(text);
                     }
                   },
