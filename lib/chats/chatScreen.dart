@@ -214,16 +214,18 @@ class _ChatScreenState extends State<ChatScreen> {
                     child: Column(
                       children: [
                         //Chat area
-                        Container(
-                          width: size.width,
-                          height: size.height * 0.5,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: kDefaultPadding),
-                            child: ListView.builder(
-                              itemCount: demeChatMessages.length,
-                              itemBuilder: (context, index) =>
-                                  Message(message: demeChatMessages[index]),
+                        SingleChildScrollView(
+                          child: Container(
+                            width: size.width,
+                            height: size.height,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: kDefaultPadding),
+                              child: ListView.builder(
+                                itemCount: demeChatMessages.length,
+                                itemBuilder: (context, index) =>
+                                    Message(message: demeChatMessages[index]),
+                              ),
                             ),
                           ),
                         ),
