@@ -6,4 +6,4 @@ const lightPurple = Color(0xFFF1EFF5);
 const darkGreen = Color(0xFF337E90);
 
 
-const kDefaultPadding = 20.0;
+const kDefaultPadding = 24.0;

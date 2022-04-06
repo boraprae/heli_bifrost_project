@@ -67,6 +67,7 @@ class ChatInputField extends StatelessWidget {
                           hintStyle: TextStyle(fontSize: 12),
                           border: InputBorder.none,
                         ),
+                        style: TextStyle(fontSize: 14),
                       ),
                     ),
                     //?=== Send Message Button ===?

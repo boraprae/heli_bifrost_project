@@ -85,7 +85,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           height: 5,
                         ),
                         Text(
-                          "\"โชคดีที่มีเฮลิ\"",
+                          "\"วันที่ดีที่สุดคือวันที่ถูกหวยยังไงล่ะ!\"",
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.black,
@@ -126,26 +126,26 @@ class _ChatScreenState extends State<ChatScreen> {
                 top: 110,
                 child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: Container(
-                    width: size.width,
-                    height: size.height,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(35.0),
-                        topRight: Radius.circular(35.0),
+                  child: SingleChildScrollView(
+                    child: Container(
+                      width: size.width,
+                      height: size.height,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(35.0),
+                          topRight: Radius.circular(35.0),
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      children: [
-                        //Chat area
-                        SingleChildScrollView(
-                          child: Container(
+                      child: Column(
+                        children: [
+                          //Chat area
+                          Container(
                             width: size.width,
                             height: size.height,
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: kDefaultPadding),
+                                  horizontal: kDefaultPadding + 8),
                               child: ListView.builder(
                                 itemCount: demeChatMessages.length,
                                 itemBuilder: (context, index) =>
@@ -153,8 +153,8 @@ class _ChatScreenState extends State<ChatScreen> {
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
