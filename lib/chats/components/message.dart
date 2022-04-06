@@ -16,7 +16,7 @@ class Message extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.only(top: kDefaultPadding),
+      padding: const EdgeInsets.symmetric(vertical: kDefaultPadding/2),
       child: Row(
         mainAxisAlignment:
             message.isSender ? MainAxisAlignment.end : MainAxisAlignment.start,

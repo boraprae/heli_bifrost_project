@@ -16,11 +16,15 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   var selectedItem = '';
+
+  final _chatListViewController = ScrollController();
+
   void _sendMessage(String textMessage) async {
     print('Sending query.. $textMessage');
-    String serverAddress = kIsWeb ? 'http://localhost:3001' : dotenv.env['SERVER_ADDRESS']!;
+    String serverAddress =
+        kIsWeb ? 'http://localhost:3001' : dotenv.env['SERVER_ADDRESS']!;
     Response response = await GetConnect(timeout: const Duration(seconds: 15))
-        .post( serverAddress + '/query', {"query": textMessage});
+        .post(serverAddress + '/query', {"query": textMessage});
 
     if (response.isOk) {
       // print(response.body);
@@ -30,6 +34,7 @@ class _ChatScreenState extends State<ChatScreen> {
             messageType: ChatMessageType.text,
             messageStatus: MessageStatus.viewed,
             isSender: false));
+        _scrollDown();
       });
     } else {
       Get.defaultDialog(
@@ -40,9 +45,22 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  void _scrollDown() {
+    if (_chatListViewController.position.maxScrollExtent != 0) {
+      _chatListViewController.animateTo(
+        _chatListViewController.position.maxScrollExtent + 70,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.fastOutSlowIn,
+      );
+    }
+
+    // _chatListViewController.jumpTo(_chatListViewController.position.maxScrollExtent);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double chatListViewTopOffset = 110;
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -123,39 +141,38 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
               Positioned(
-                top: 110,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SingleChildScrollView(
-                    child: Container(
-                      width: size.width,
-                      height: size.height,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(35.0),
-                          topRight: Radius.circular(35.0),
+                top: chatListViewTopOffset,
+                child: Container(
+                  width: size.width,
+                  height: size.height,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(35.0),
+                      topRight: Radius.circular(35.0),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      //Chat area
+                      Container(
+                        width: size.width,
+                        height: size.height -
+                            (chatListViewTopOffset *
+                                1.85), // fix text input overlapping chat listview
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: kDefaultPadding + 8),
+                          child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            controller: _chatListViewController,
+                            itemCount: demeChatMessages.length,
+                            itemBuilder: (context, index) =>
+                                Message(message: demeChatMessages[index]),
+                          ),
                         ),
                       ),
-                      child: Column(
-                        children: [
-                          //Chat area
-                          Container(
-                            width: size.width,
-                            height: size.height,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: kDefaultPadding + 8),
-                              child: ListView.builder(
-                                itemCount: demeChatMessages.length,
-                                itemBuilder: (context, index) =>
-                                    Message(message: demeChatMessages[index]),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    ],
                   ),
                 ),
               ),
@@ -170,7 +187,9 @@ class _ChatScreenState extends State<ChatScreen> {
                             messageType: ChatMessageType.text,
                             messageStatus: MessageStatus.viewed,
                             isSender: true));
+                        _scrollDown();
                       });
+
                       _sendMessage(text);
                     }
                   },
