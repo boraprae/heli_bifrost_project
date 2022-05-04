@@ -26,8 +26,8 @@ class _LoginState extends State<Login> {
                 'หน้าเข้าสู่ระบบ',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 36,
-                  fontWeight: FontWeight.w500,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               // ),
