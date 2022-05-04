@@ -27,10 +27,19 @@ class _LoginState extends State<Login> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: size.width,
-                  height: size.height * 0.6,
-                  color: Colors.white.withOpacity(0.7),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: Container(
+                    width: size.width,
+                    height: size.height * 0.6,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(36),
+                        bottomRight: Radius.circular(36),
+                      ),
+                      color: Colors.white.withOpacity(0.7),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -188,7 +197,7 @@ class _LoginState extends State<Login> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "\“พี่จะสร้างบัญชีใหม่ก็ได้นะ \”",
+                                  "\“พี่จะสร้างบัญชีใหม่ก็ได้นะ ",
                                   style: TextStyle(
                                     fontSize: 12,
                                   ),
@@ -213,7 +222,7 @@ class _LoginState extends State<Login> {
                               primary: Colors.black,
                             ),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/signUppage');
+                              Navigator.pushNamed(context, '/register');
                             }),
                       ),
                     ],
