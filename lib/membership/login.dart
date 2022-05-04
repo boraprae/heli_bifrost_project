@@ -27,10 +27,19 @@ class _LoginState extends State<Login> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: size.width,
-                  height: size.height * 0.6,
-                  color: Colors.white.withOpacity(0.7),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: Container(
+                    width: size.width,
+                    height: size.height * 0.6,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(36),
+                        bottomRight: Radius.circular(36),
+                      ),
+                      color: Colors.white.withOpacity(0.7),
+                    ),
+                  ),
                 ),
               ],
             ),

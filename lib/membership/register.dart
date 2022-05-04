@@ -15,6 +15,7 @@ class _RegiserState extends State<Regiser> {
   TextEditingController tcConfirmedPassword = TextEditingController();
   bool showPassword = true;
   DateTime? dateOfBirth;
+  String gender = '';
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +33,19 @@ class _RegiserState extends State<Regiser> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: size.width,
-                  height: size.height * 0.9,
-                  color: Colors.white.withOpacity(0.7),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: Container(
+                    width: size.width,
+                    height: size.height * 0.93,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(36),
+                        bottomRight: Radius.circular(36),
+                      ),
+                      color: Colors.white.withOpacity(0.7),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -145,6 +155,52 @@ class _RegiserState extends State<Regiser> {
                             dateOfBirth = value;
                           },
                         ),
+                      ),
+                      Text(
+                        'เพศ',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Radio(
+                              value: "male",
+                              groupValue: gender,
+                              onChanged: (value) {
+                                setState(() {
+                                  gender = value.toString();
+                                  print(gender);
+                                });
+                              }),
+                          Text(
+                            'ชาย',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Radio(
+                              value: "female",
+                              groupValue: gender,
+                              onChanged: (value) {
+                                setState(() {
+                                  gender = value.toString();
+                                  print(gender);
+                                });
+                              }),
+                          Text(
+                            'หญิง',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(
                         height: 16,
