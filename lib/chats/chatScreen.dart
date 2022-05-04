@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:heli_bifrost_project/chats/components/chat_input_field.dart';
 import 'package:heli_bifrost_project/chats/components/message.dart';
@@ -16,15 +17,38 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   var selectedItem = '';
-
+  bool isLoggedIn = false;
+  late String _token;
   final _chatListViewController = ScrollController();
+
+  void _checkLogin() async {
+    FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+    String? token = await secureStorage.read(key: 'token');
+    if (token == null) {
+      isLoggedIn = false;
+    } else {
+      _token = token;
+      isLoggedIn = true;
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _checkLogin();
+  }
 
   void _sendMessage(String textMessage) async {
     print('Sending query.. $textMessage');
     String serverAddress =
         kIsWeb ? 'http://localhost:3001' : dotenv.env['SERVER_ADDRESS']!;
-    Response response = await GetConnect(timeout: const Duration(seconds: 30))
-        .post(serverAddress + '/query', {"query": textMessage});
+    String queryPath = isLoggedIn ? '/user/query' : '/query';
+    Response response =
+        await GetConnect(timeout: const Duration(seconds: 30)).post(
+      serverAddress + queryPath,
+      {"query": textMessage}, headers: { 'authorization': isLoggedIn ? 'Bearer ' + _token : '' }
+    );
 
     if (response.isOk) {
       // print(response.body);
@@ -72,12 +96,21 @@ class _ChatScreenState extends State<ChatScreen> {
           _scrollDown();
         });
       }
-    } else {
+    } else if (response.statusCode == 401) {
       Get.defaultDialog(
           title: 'Error',
-          middleText: response.statusCode == null
-              ? "Request timed out"
-              : "Cannot send message, please try again");
+          middleText: "Session expired, please login again.",
+          actions: [
+            TextButton(
+                onPressed: () => Get.toNamed('/login'), child: const Text('OK'))
+          ]);
+    } else {
+      Get.defaultDialog(
+        title: 'Error',
+        middleText: response.statusCode == null
+            ? "Request timed out"
+            : "Cannot send message, please try again",
+      );
     }
   }
 

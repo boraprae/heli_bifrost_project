@@ -1,4 +1,10 @@
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -11,6 +17,49 @@ class _LoginState extends State<Login> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool showPassword = true;
+
+  void _showDialog({required String title, required String message}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(message),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Future _login() async {
+    print('loging in');
+    String loginUrl =
+        kIsWeb ? 'http://localhost:3001' : dotenv.env['SERVER_ADDRESS']!;
+    loginUrl += '/login';
+    Response response = await GetConnect().post(loginUrl, {
+      "email": usernameController.text,
+      "password": passwordController.text
+    });
+
+    if (!response.status.isOk) {
+      print(response.body);
+      _showDialog(
+        title: 'Warning!',
+        message: response.body.toString(),
+      );
+    } else {
+      FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+      print(response.body['user_data']);
+      await secureStorage.write(key: 'token', value: response.body['token']);
+      await secureStorage.write(key: 'user_data', value: jsonEncode(response.body['user_data']));
+      Get.toNamed('/chat');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -145,22 +194,13 @@ class _LoginState extends State<Login> {
                             onPressed: () async {
                               if (usernameController.text == '' ||
                                   passwordController.text == '') {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text('Warning!'),
-                                      content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                              'Please type your email and password first.'),
-                                        ],
-                                      ),
-                                    );
-                                  },
+                                _showDialog(
+                                  title: 'Warning!',
+                                  message:
+                                      'Please type your email and password first.',
                                 );
                               } else {
+                                _login();
                                 //  var Loging = await login();
                                 //saveToken(Loging.body);
                                 // if (Loging.statusCode < 299) {
