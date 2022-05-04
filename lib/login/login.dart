@@ -59,7 +59,7 @@ class _LoginState extends State<Login> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'ชื่อผู้ใช้งาน',
+                        'อีเมล',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
