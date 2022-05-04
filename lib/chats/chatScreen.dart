@@ -23,19 +23,55 @@ class _ChatScreenState extends State<ChatScreen> {
     print('Sending query.. $textMessage');
     String serverAddress =
         kIsWeb ? 'http://localhost:3001' : dotenv.env['SERVER_ADDRESS']!;
-    Response response = await GetConnect(timeout: const Duration(seconds: 15))
+    Response response = await GetConnect(timeout: const Duration(seconds: 30))
         .post(serverAddress + '/query', {"query": textMessage});
 
     if (response.isOk) {
       // print(response.body);
-      setState(() {
-        demeChatMessages.add(ChatMessage(
-            text: response.body['queryResult']['fulfillmentText'],
-            messageType: ChatMessageType.text,
-            messageStatus: MessageStatus.viewed,
-            isSender: false));
-        _scrollDown();
-      });
+      if (response.body['service_type'] == 'dialogflow') {
+        var data = response.body['data'];
+        var messages = data['queryResult']['fulfillmentMessages'];
+        setState(() {
+          for (var message in messages) {
+            demeChatMessages.add(ChatMessage(
+                text: message['text']['text'][0],
+                messageType: ChatMessageType.text,
+                messageStatus: MessageStatus.viewed,
+                isSender: false));
+            _scrollDown();
+          }
+        });
+      } else if (response.body['service_type'] == 'openai') {
+        /*
+        openAI completion response:
+          {
+            "id": "cmpl-5386T799VJPBmxUbcbf5EahSvcOll",
+            "object": "text_completion",
+            "created": 1651427817,
+            "model": "text-davinci:002",
+            "choices": [
+                {
+                    "text": "\nHeli: Hey there! How are you doing today?",
+                    "index": 0,
+                    "logprobs": null,
+                    "finish_reason": "stop"
+                }
+            ]
+          }
+        */
+        var data = response.body['data'];
+        String message = data['choices'][0]['text'];
+        setState(() {
+          demeChatMessages.add(ChatMessage(
+              text: message.split('Heli:').length > 1
+                  ? message.split('Heli:')[1].trim()
+                  : message.trim(),
+              messageType: ChatMessageType.text,
+              messageStatus: MessageStatus.viewed,
+              isSender: false));
+          _scrollDown();
+        });
+      }
     } else {
       Get.defaultDialog(
           title: 'Error',
@@ -48,7 +84,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void _scrollDown() {
     if (_chatListViewController.position.maxScrollExtent != 0) {
       _chatListViewController.animateTo(
-        _chatListViewController.position.maxScrollExtent + 70,
+        _chatListViewController.position.maxScrollExtent + 100,
         duration: const Duration(milliseconds: 500),
         curve: Curves.fastOutSlowIn,
       );

@@ -16,12 +16,12 @@ class ChatMessage {
 }
 
 List demeChatMessages = [
-  ChatMessage(
-    text: "สวัสดีนะ เป็นยังไงบ้างวันนี้",
-    messageType: ChatMessageType.text,
-    messageStatus: MessageStatus.viewed,
-    isSender: false,
-  ),
+  // ChatMessage(
+  //   text: "สวัสดีนะ เป็นยังไงบ้างวันนี้",
+  //   messageType: ChatMessageType.text,
+  //   messageStatus: MessageStatus.viewed,
+  //   isSender: false,
+  // ),
   // ChatMessage(
   //   text: "Hello, How are you?",
   //   messageType: ChatMessageType.text,
