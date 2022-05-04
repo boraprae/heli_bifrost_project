@@ -38,6 +38,7 @@ dependencies:
   flutter_dotenv: ^5.0.2
   auto_size_text: ^3.0.0
   date_field: ^3.0.0
+  flutter_secure_storage: ^5.0.2
 
 dev_dependencies:
   flutter_test:
