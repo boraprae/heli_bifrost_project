@@ -60,7 +60,7 @@ class _ChatScreenState extends State<ChatScreen> {
           }
         */
         var data = response.body['data'];
-        String message = data['choices'][0]['text'];
+        String message = data['choices'][0]['text_th'];
         setState(() {
           demeChatMessages.add(ChatMessage(
               text: message.split('Heli:').length > 1
