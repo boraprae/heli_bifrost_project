@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:heli_bifrost_project/chats/chatScreen.dart';
-import 'package:heli_bifrost_project/login/login.dart';
+import 'package:heli_bifrost_project/membership/login.dart';
+import 'package:heli_bifrost_project/membership/register.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
@@ -16,9 +16,10 @@ void main() async {
         // bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.black54),
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/login',
+      initialRoute: '/register',
       routes: {
         '/login': (context) => Login(),
+        '/register': (context) => Regiser(),
         '/chat': (context) => ChatScreen(),
       },
     ),

@@ -188,7 +188,7 @@ class _LoginState extends State<Login> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "\“พี่จะสร้างบัญชีใหม่ก็ได้นะ \”",
+                                  "\“พี่จะสร้างบัญชีใหม่ก็ได้นะ ",
                                   style: TextStyle(
                                     fontSize: 12,
                                   ),
@@ -213,7 +213,7 @@ class _LoginState extends State<Login> {
                               primary: Colors.black,
                             ),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/signUppage');
+                              Navigator.pushNamed(context, '/register');
                             }),
                       ),
                     ],
