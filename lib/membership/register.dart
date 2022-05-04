@@ -43,7 +43,7 @@ class _RegiserState extends State<Regiser> {
                         topRight: Radius.circular(36),
                         bottomRight: Radius.circular(36),
                       ),
-                      color: Colors.white.withOpacity(0.7),
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -53,6 +53,9 @@ class _RegiserState extends State<Regiser> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                  SizedBox(
+                        height: 16,
+                      ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

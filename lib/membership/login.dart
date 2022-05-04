@@ -37,7 +37,7 @@ class _LoginState extends State<Login> {
                         topRight: Radius.circular(36),
                         bottomRight: Radius.circular(36),
                       ),
-                      color: Colors.white.withOpacity(0.7),
+                      color: Colors.white,
                     ),
                   ),
                 ),
