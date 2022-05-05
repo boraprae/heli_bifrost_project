@@ -1,5 +1,8 @@
 import 'package:date_field/date_field.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
 
 class Regiser extends StatefulWidget {
   const Regiser({Key? key}) : super(key: key);
@@ -16,6 +19,72 @@ class _RegiserState extends State<Regiser> {
   bool showPassword = true;
   DateTime? dateOfBirth;
   String gender = '';
+
+  void _showDialog({required String title, required String message}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(message),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _register() async {
+    List inputs = [
+      tcEmail.text,
+      tcPassword.text,
+      tcNickname.text,
+      gender,
+      dateOfBirth.toString().split(' ')[0]
+    ];
+
+    print(inputs);
+
+    for (var input in inputs) {
+      if (input == null || input == '') {
+        return _showDialog(
+          title: 'Warning',
+          message: 'Please check your input.',
+        );
+      }
+    }
+
+    if (tcPassword.text != tcConfirmedPassword.text) {
+      return _showDialog(
+        title: "Warning",
+        message: 'Password does not match, please check your input.',
+      );
+    }
+
+    print(dateOfBirth.toString().split(' ')[0]);
+    String registerUrl =
+        kIsWeb ? 'http://localhost:3001' : dotenv.env['SERVER_ADDRESS']!;
+    registerUrl += '/register';
+    Response response = await GetConnect().post(registerUrl, {
+      "email": tcEmail.text,
+      "password": tcPassword.text,
+      "nickname": tcNickname.text,
+      "sex": gender == 'male' ? 0 : 1,
+      "date_of_birth": dateOfBirth.toString().split(' ')[0]
+    });
+
+    if (!response.status.isOk) {
+      return _showDialog(
+        title: 'Error',
+        message: response.body.toString(),
+      );
+    }
+
+    Get.toNamed('/login');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +122,9 @@ class _RegiserState extends State<Regiser> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                  SizedBox(
-                        height: 16,
-                      ),
+                SizedBox(
+                  height: 16,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -262,7 +331,8 @@ class _RegiserState extends State<Regiser> {
                             height: 0.05 * size.height,
                             child: ElevatedButton(
                               onPressed: () {
-                                Navigator.pushNamed(context, '/chat');
+                                // Navigator.pushNamed(context, '/chat');
+                                _register();
                               },
                               style: ElevatedButton.styleFrom(
                                 side: BorderSide(
