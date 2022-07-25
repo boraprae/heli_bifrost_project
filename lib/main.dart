@@ -6,7 +6,7 @@ import 'package:heli_bifrost_project/membership/login.dart';
 import 'package:heli_bifrost_project/membership/register.dart';
 
 void main() async {
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: "dotenv");
 
   runApp(
     GetMaterialApp(
