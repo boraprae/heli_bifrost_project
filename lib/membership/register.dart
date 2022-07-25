@@ -66,7 +66,7 @@ class _RegiserState extends State<Regiser> {
 
     print(dateOfBirth.toString().split(' ')[0]);
     String registerUrl =
-        kIsWeb ? 'http://localhost:3001' : dotenv.env['SERVER_ADDRESS']!;
+        kIsWeb ? dotenv.env['SERVER_WEB_ADDRESS']! : dotenv.env['SERVER_ADDRESS']!;
     registerUrl += '/register';
     Response response = await GetConnect().post(registerUrl, {
       "email": tcEmail.text,

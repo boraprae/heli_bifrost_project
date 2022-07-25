@@ -42,7 +42,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void _sendMessage(String textMessage) async {
     print('Sending query.. $textMessage');
     String serverAddress =
-        kIsWeb ? 'http://localhost:3001' : dotenv.env['SERVER_ADDRESS']!;
+        kIsWeb ? dotenv.env['SERVER_WEB_ADDRESS']! : dotenv.env['SERVER_ADDRESS']!;
     String queryPath = isLoggedIn ? '/user/query' : '/query';
     Response response =
         await GetConnect(timeout: const Duration(seconds: 30)).post(
@@ -109,7 +109,7 @@ class _ChatScreenState extends State<ChatScreen> {
         title: 'Error',
         middleText: response.statusCode == null
             ? "Request timed out"
-            : "Cannot send message, please try again",
+            : "Cannot send message, please try again. \n Reason: " + response.body,
       );
     }
   }

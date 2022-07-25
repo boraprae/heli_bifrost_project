@@ -38,7 +38,7 @@ class _LoginState extends State<Login> {
   Future _login() async {
     print('loging in');
     String loginUrl =
-        kIsWeb ? 'http://localhost:3001' : dotenv.env['SERVER_ADDRESS']!;
+        kIsWeb ? dotenv.env['SERVER_WEB_ADDRESS']! : dotenv.env['SERVER_ADDRESS']!;
     loginUrl += '/login';
     Response response = await GetConnect().post(loginUrl, {
       "email": usernameController.text,
