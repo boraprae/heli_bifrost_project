@@ -41,14 +41,13 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _sendMessage(String textMessage) async {
     print('Sending query.. $textMessage');
-    String serverAddress =
-        kIsWeb ? dotenv.env['SERVER_WEB_ADDRESS']! : dotenv.env['SERVER_ADDRESS']!;
+    String serverAddress = kIsWeb
+        ? dotenv.env['SERVER_WEB_ADDRESS']!
+        : dotenv.env['SERVER_ADDRESS']!;
     String queryPath = isLoggedIn ? '/user/query' : '/query';
-    Response response =
-        await GetConnect(timeout: const Duration(seconds: 30)).post(
-      serverAddress + queryPath,
-      {"query": textMessage}, headers: { 'authorization': isLoggedIn ? 'Bearer ' + _token : '' }
-    );
+    Response response = await GetConnect(timeout: const Duration(seconds: 30))
+        .post(serverAddress + queryPath, {"query": textMessage},
+            headers: {'authorization': isLoggedIn ? 'Bearer ' + _token : ''});
 
     if (response.isOk) {
       // print(response.body);
@@ -109,7 +108,8 @@ class _ChatScreenState extends State<ChatScreen> {
         title: 'Error',
         middleText: response.statusCode == null
             ? "Request timed out"
-            : "Cannot send message, please try again. \n Reason: " + response.body,
+            : "Cannot send message, please try again. \n Reason: " +
+                response.body,
       );
     }
   }
@@ -117,7 +117,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void _scrollDown() {
     if (_chatListViewController.position.maxScrollExtent != 0) {
       _chatListViewController.animateTo(
-        _chatListViewController.position.maxScrollExtent + 100,
+        _chatListViewController.position.maxScrollExtent + 300,
         duration: const Duration(milliseconds: 500),
         curve: Curves.fastOutSlowIn,
       );
@@ -233,7 +233,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: kDefaultPadding + 8),
                           child: ListView.builder(
-                            physics: const BouncingScrollPhysics(),
+                            // physics: const BouncingScrollPhysics(),
                             controller: _chatListViewController,
                             itemCount: demeChatMessages.length,
                             itemBuilder: (context, index) =>
@@ -258,7 +258,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             isSender: true));
                         _scrollDown();
                       });
-
+                      _scrollDown();
                       _sendMessage(text);
                     }
                   },
