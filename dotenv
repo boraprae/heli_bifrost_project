@@ -1,2 +1,2 @@
-SERVER_ADDRESS=https://heli-app-endpoint.up.railway.app/
-SERVER_WEB_ADDRESS=https://heli-app-endpoint.up.railway.app/
+SERVER_ADDRESS=https://heli-app-endpoint.up.railway.app
+SERVER_WEB_ADDRESS=https://heli-app-endpoint.up.railway.app
