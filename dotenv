@@ -1,2 +1,2 @@
-SERVER_ADDRESS=http://10.0.2.2:3001
-SERVER_WEB_ADDRESS=http://localhost:3001
+SERVER_ADDRESS=https://heli-app-endpoint.up.railway.app/
+SERVER_WEB_ADDRESS=https://heli-app-endpoint.up.railway.app/
